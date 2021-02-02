@@ -34,60 +34,74 @@
               </div>
             </v-row>
             
-            <v-row>
-              <v-text-field
-                v-model="usuario.nome"
-                class="formField"
-                label="Nome"
-                required
-              />
+            <v-row
+              align="center"
+              justify="center"
+            >
+              <div class="subtitle-1">
+                {{ mensagemSolicitacaoDados }}
+              </div>
+            </v-row>
+            
+
+            <!-- DADOS SOLICITADOS -->
+            <component :is="informacaoSolicitadaDaVez"></component>
+            
+            <!-- BOTAO CADASTRAR -->
+           
+            <v-row
+              class="btnEntrar"
+              v-if="informacaoSolicitadaDaVez == 'informacoesPessoais' "
+            >
+              <v-spacer></v-spacer>
+              <v-btn
+                color="green"
+                :disabled="!valid"
+                @click="proximo"
+              >
+                Próximo
+              </v-btn>
+
             </v-row>
 
-           <v-row>
-              <v-text-field
-                v-model="usuario.sobrenome"
-                class="formField"
-                label="Sobrenome"
-                required
-              />
-            </v-row>
-
-            <v-row>
-              <v-text-field
-                v-model="usuario.email"
-                class="formField"
-                :rules="emailRules"
-                label="E-mail (login)"
-                type="mail"
-                required
-              />
-            </v-row>
-            <v-row>
-              <v-text-field
-                v-model="usuario.senha"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="showPassword ? 'text' : 'password'"
-                class="formField"
-                label="Senha"
-                :rules="senhaRules"
-                required
-                @click:append="showPassword = !showPassword"
-              />
-            </v-row>
             <v-row
               align="center"
               justify="center"
               class="btnEntrar"
+              v-else
             >
               <v-btn
                 color="green"
-                width="82%"
+                width="45%"
+                @click="anterior"
+              >
+                Anterior
+              </v-btn>
+
+              <v-btn
+                v-if="informacaoSolicitadaDaVez == 'RevisarInformacoes'"
+                color="green"
+                width="45%"
                 :disabled="!valid"
-                @click="cadastrar"
+                @click="proximo"
               >
                 Cadastrar
               </v-btn>
+
+              <v-btn
+                v-else
+                color="green"
+                width="45%"
+                :disabled="!valid"
+                @click="proximo"
+              >
+                Próximo
+              </v-btn>
+
             </v-row>
+            
+            <!-- ANTERIOR - PROXIMO -->
+           
             <v-row>
               <v-col
                 justify="center"
@@ -106,26 +120,56 @@
 </template>
 
 <script>
+import informacoesDeLogin from '../components/cadastro/InformacoesDeLogin.vue'
+import informacoesPessoais from '../components/cadastro/InformacoesPessoais.vue'
+import RevisarInformacoes from '../components/cadastro/RevisarInformacoes.vue'
+
 export default {
+  components: {informacoesDeLogin,informacoesPessoais,RevisarInformacoes},
   data() {
     return {
-      usuario : {
-        senha: '',
-        email: '',
-      },
       valid: false,
-      emailRules: [
-        (v) => (!!v || 'Campo obrigatório'),
-        (v) => (!v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser valido')],
-      senhaRules: [(v) => (!!v || 'Campo obrigatório')],
-      showPassword: false,
+      informacaoSolicitadaDaVez: 'informacoesPessoais',
     };
+  },
+  computed : {
+    mensagemSolicitacaoDados(){
+      let mensagem = '';
+
+      switch(this.informacaoSolicitadaDaVez){
+        case 'informacoesDeLogin' : mensagem = 'Dados de acesso'; break;
+        case 'informacoesPessoais': mensagem = 'Dados pessoais'; break;
+        case 'RevisarInformacoes': mensagem = 'As informações estão corretas ?'
+      }
+
+      return mensagem;
+    }
   },
   methods: {
     cadastrar() {
       this.$refs.form.validate();
       console.log('validated', this.valid);
     },
+    proximo(){
+
+      let proxima = '';
+      switch(this.informacaoSolicitadaDaVez){
+        case 'informacoesPessoais' : proxima = 'informacoesDeLogin'; break;
+        case 'informacoesDeLogin' : proxima = 'RevisarInformacoes'; break;
+      }
+
+      this.informacaoSolicitadaDaVez = proxima;
+    },
+    anterior(){
+      let anterior = '';
+      switch(this.informacaoSolicitadaDaVez){
+        case 'informacoesDeLogin' : anterior = 'informacoesPessoais'; break;  
+        case 'RevisarInformacoes' : anterior = 'informacoesDeLogin'; break;
+      } 
+
+      this.informacaoSolicitadaDaVez = anterior;
+
+    }
   },
 };
 </script>
