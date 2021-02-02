@@ -1,18 +1,18 @@
 <template>
   <div class="informacoesDeLogin">
     <v-row
-          v-if="showDescription"
-          align="center"
-          justify="center"
-      >
+      v-if="showDescription"
+      align="center"
+      justify="center"
+    >
       <div class="subtitle-1 font-weight-black">
-            Dados de acesso
+        Dados de acesso
       </div>
     </v-row>
     <v-row>
       <v-text-field
-        :readonly="readonly"
         v-model="email"
+        :readonly="readonly"
         class="formField"
         :rules="emailRules"
         label="E-mail (login)"
@@ -22,8 +22,8 @@
     </v-row>
     <v-row>
       <v-text-field
-        :readonly="readonly"
         v-model="senha"
+        :readonly="readonly"
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         :type="showPassword ? 'text' : 'password'"
         class="formField"
@@ -32,7 +32,7 @@
         required
         @click:append="showPassword = !showPassword"
       />
-  </v-row>
+    </v-row>
   </div>
 </template>
 

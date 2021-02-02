@@ -1,18 +1,22 @@
 <template>
   <div class="revisarInformacoes">
-
     <v-row
-          align="center"
-          justify="center"
-        >
-          <div class="subtitle-1 font-weight-black">
-            As informações estão corretas
-          </div>
-        </v-row>
+      align="center"
+      justify="center"
+    >
+      <div class="subtitle-1 font-weight-black">
+        As informações estão corretas
+      </div>
+    </v-row>
 
-    <InformacoesPessoais readonly :showDescription="false"/>
-    <InformacoesDeLogin readonly  :showDescription="false" />
-
+    <InformacoesPessoais
+      readonly
+      :show-description="false"
+    />
+    <InformacoesDeLogin
+      readonly
+      :show-description="false"
+    />
   </div>
 </template>
 

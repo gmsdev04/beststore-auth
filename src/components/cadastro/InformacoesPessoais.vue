@@ -1,21 +1,20 @@
 <template>
   <div class="informacoesPessoais">
-
-        <v-row
-          v-if="showDescription"
-          align="center"
-          justify="center"
-        >
-          <div class="subtitle-1 font-weight-black">
-            Dados pessoais
-          </div>
-        </v-row>
+    <v-row
+      v-if="showDescription"
+      align="center"
+      justify="center"
+    >
+      <div class="subtitle-1 font-weight-black">
+        Dados pessoais
+      </div>
+    </v-row>
 
 
     <v-row>
       <v-text-field
-        :readonly="readonly"
         v-model="nome"
+        :readonly="readonly"
         :rules="nomeRules"
         class="formField"
         label="Nome"
@@ -25,16 +24,14 @@
 
     <v-row>
       <v-text-field
-        :readonly="readonly"
         v-model="sobrenome"
+        :readonly="readonly"
         :rules="sobrenomeRules"
         class="formField"
         label="Sobrenome"
         required
       />
     </v-row>
-
-
   </div>
 </template>
 

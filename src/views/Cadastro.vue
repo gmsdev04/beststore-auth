@@ -35,19 +35,20 @@
             </v-row>
       
             <!-- DADOS SOLICITADOS -->
-            <transition mode="out-in" 
+            <transition
+              mode="out-in" 
               enter-active-class="animate__animated animate__fadeIn animate__faster"
               leave-active-class="animate__animated animate__fadeOut animate__faster"
             >
-              <component :is="informacaoSolicitadaDaVez"></component>
+              <component :is="informacaoSolicitadaDaVez" />
             </transition>
             <!-- BOTAO CADASTRAR -->
            
             <v-row
+              v-if="informacaoSolicitadaDaVez == 'informacoesPessoais' "
               align="center"
               justify="center"
               class="btnEntrar"
-              v-if="informacaoSolicitadaDaVez == 'informacoesPessoais' "
             >
               <v-btn
                 plain
@@ -57,14 +58,13 @@
               >
                 Próximo
               </v-btn>
-
             </v-row>
 
             <v-row
+              v-else
               align="center"
               justify="center"
               class="btnEntrar"
-              v-else
             >
               <v-btn
                 plain
@@ -76,8 +76,8 @@
               </v-btn>
 
               <v-btn
-                plain
                 v-if="informacaoSolicitadaDaVez == 'RevisarInformacoes'"
+                plain
                 color="green"
                 width="45%"
                 :disabled="!valid"
@@ -87,8 +87,8 @@
               </v-btn>
 
               <v-btn
-                plain
                 v-else
+                plain
                 color="green"
                 width="45%"
                 :disabled="!valid"
@@ -96,7 +96,6 @@
               >
                 Próximo
               </v-btn>
-
             </v-row>
             
             <!-- ANTERIOR - PROXIMO -->
@@ -107,7 +106,7 @@
                 align="center"
               >
                 <div class="subtitle-2">
-                 Já possui conta ? Entre!
+                  Já possui conta ? Entre!
                 </div>
               </v-col>
             </v-row>
