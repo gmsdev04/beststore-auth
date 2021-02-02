@@ -50,11 +50,14 @@
             <!-- BOTAO CADASTRAR -->
            
             <v-row
+              align="center"
+              justify="center"
               class="btnEntrar"
               v-if="informacaoSolicitadaDaVez == 'informacoesPessoais' "
+            
             >
-              <v-spacer></v-spacer>
               <v-btn
+                plain
                 color="green"
                 :disabled="!valid"
                 @click="proximo"
@@ -71,6 +74,7 @@
               v-else
             >
               <v-btn
+                plain
                 color="green"
                 width="45%"
                 @click="anterior"
@@ -79,6 +83,7 @@
               </v-btn>
 
               <v-btn
+                plain
                 v-if="informacaoSolicitadaDaVez == 'RevisarInformacoes'"
                 color="green"
                 width="45%"
@@ -89,6 +94,7 @@
               </v-btn>
 
               <v-btn
+                plain
                 v-else
                 color="green"
                 width="45%"
