@@ -21,7 +21,7 @@
               align="center"
               justify="center"
             >
-              <div class="text-h5">
+              <div class="text-h6 font-weight-black green--text">
                 Criar conta
               </div>
             </v-row>
@@ -30,7 +30,7 @@
               justify="center"
             >
               <div class="subtitle-1">
-                Cadastre-se para acessar o BestStore!
+                Cadastre-se para acessar o  BestStore!
               </div>
             </v-row>
             
@@ -38,7 +38,7 @@
               align="center"
               justify="center"
             >
-              <div class="subtitle-1">
+              <div class="subtitle-1 font-weight-black">
                 {{ mensagemSolicitacaoDados }}
               </div>
             </v-row>
@@ -54,7 +54,6 @@
               justify="center"
               class="btnEntrar"
               v-if="informacaoSolicitadaDaVez == 'informacoesPessoais' "
-            
             >
               <v-btn
                 plain
@@ -90,7 +89,7 @@
                 :disabled="!valid"
                 @click="proximo"
               >
-                Cadastrar
+                Cadastrar!
               </v-btn>
 
               <v-btn
