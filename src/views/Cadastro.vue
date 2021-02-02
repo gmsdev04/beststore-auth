@@ -37,8 +37,8 @@
             <!-- DADOS SOLICITADOS -->
             <transition
               mode="out-in" 
-              enter-active-class="animate__animated animate__fadeIn animate__faster"
-              leave-active-class="animate__animated animate__fadeOut animate__faster"
+              enter-active-class="animate__animated animate__fadeIn animate-speed"
+              leave-active-class="animate__animated animate__fadeOut animate-speed"
             >
               <component :is="informacaoSolicitadaDaVez" />
             </transition>
@@ -55,6 +55,7 @@
                 color="green"
                 :disabled="!valid"
                 @click="proximo"
+                @keyup.enter="proximo"
               >
                 Próximo
               </v-btn>
@@ -82,6 +83,7 @@
                 width="45%"
                 :disabled="!valid"
                 @click="proximo"
+                @keyup.enter="proximo"
               >
                 Cadastrar!
               </v-btn>
@@ -93,6 +95,7 @@
                 width="45%"
                 :disabled="!valid"
                 @click="proximo"
+                @keyup.enter="proximo"
               >
                 Próximo
               </v-btn>
@@ -105,9 +108,7 @@
                 justify="center"
                 align="center"
               >
-                <div class="subtitle-2">
-                  Já possui conta ? Entre!
-                </div>
+                <router-link to="/login" tag="a" class="subtitle-2">Já possui conta ? Entre!</router-link>
               </v-col>
             </v-row>
           </v-container>
@@ -132,11 +133,9 @@ export default {
   },
   methods: {
     cadastrar() {
-      this.$refs.form.validate();
       console.log('validated', this.valid);
     },
     proximo(){
-
       let proxima = '';
       switch(this.informacaoSolicitadaDaVez){
         case 'informacoesPessoais' : proxima = 'informacoesDeLogin'; break;
@@ -167,5 +166,7 @@ export default {
 .btnEntrar{
   padding-top: 5%;
 }
-
+.animate-speed {
+  --animate-duration: 0.15s;
+}
 </style>

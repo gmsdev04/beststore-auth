@@ -5,7 +5,7 @@
       align="center"
       justify="center"
     >
-      <div class="subtitle-1 font-weight-black">
+      <div class="subtitle-1 font-weight-black subTitulo">
         Dados pessoais
       </div>
     </v-row>
@@ -82,6 +82,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.subTitulo{
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
 </style>
