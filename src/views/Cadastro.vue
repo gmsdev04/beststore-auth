@@ -33,20 +33,14 @@
                 Cadastre-se para acessar o  BestStore!
               </div>
             </v-row>
-            
-            <v-row
-              align="center"
-              justify="center"
-            >
-              <div class="subtitle-1 font-weight-black">
-                {{ mensagemSolicitacaoDados }}
-              </div>
-            </v-row>
-            
-
+      
             <!-- DADOS SOLICITADOS -->
-            <component :is="informacaoSolicitadaDaVez"></component>
-            
+            <transition mode="out-in" 
+              enter-active-class="animate__animated animate__fadeIn animate__faster"
+              leave-active-class="animate__animated animate__fadeOut animate__faster"
+            >
+              <component :is="informacaoSolicitadaDaVez"></component>
+            </transition>
             <!-- BOTAO CADASTRAR -->
            
             <v-row
@@ -137,19 +131,6 @@ export default {
       informacaoSolicitadaDaVez: 'informacoesPessoais',
     };
   },
-  computed : {
-    mensagemSolicitacaoDados(){
-      let mensagem = '';
-
-      switch(this.informacaoSolicitadaDaVez){
-        case 'informacoesDeLogin' : mensagem = 'Dados de acesso'; break;
-        case 'informacoesPessoais': mensagem = 'Dados pessoais'; break;
-        case 'RevisarInformacoes': mensagem = 'As informações estão corretas ?'
-      }
-
-      return mensagem;
-    }
-  },
   methods: {
     cadastrar() {
       this.$refs.form.validate();
@@ -179,7 +160,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .formField {
   padding-left: 10%;
   padding-right: 10%;
@@ -187,4 +168,5 @@ export default {
 .btnEntrar{
   padding-top: 5%;
 }
+
 </style>

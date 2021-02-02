@@ -1,5 +1,17 @@
 <template>
   <div class="informacoesPessoais">
+
+        <v-row
+          v-if="showDescription"
+          align="center"
+          justify="center"
+        >
+          <div class="subtitle-1 font-weight-black">
+            Dados pessoais
+          </div>
+        </v-row>
+
+
     <v-row>
       <v-text-field
         :readonly="readonly"
@@ -35,6 +47,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    showDescription : {
+      type: Boolean,
+      required: false,
+      default: true,      
     }
   },
   data(){

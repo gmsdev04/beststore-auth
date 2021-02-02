@@ -1,5 +1,14 @@
 <template>
   <div class="informacoesDeLogin">
+    <v-row
+          v-if="showDescription"
+          align="center"
+          justify="center"
+      >
+      <div class="subtitle-1 font-weight-black">
+            Dados de acesso
+      </div>
+    </v-row>
     <v-row>
       <v-text-field
         :readonly="readonly"
@@ -36,6 +45,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    showDescription : {
+      type: Boolean,
+      required: false,
+      default: true,      
     }
   },
   computed : {
