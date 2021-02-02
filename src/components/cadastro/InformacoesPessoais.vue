@@ -4,6 +4,7 @@
       <v-text-field
         :readonly="readonly"
         v-model="nome"
+        :rules="nomeRules"
         class="formField"
         label="Nome"
         required
@@ -14,6 +15,7 @@
       <v-text-field
         :readonly="readonly"
         v-model="sobrenome"
+        :rules="sobrenomeRules"
         class="formField"
         label="Sobrenome"
         required
@@ -33,6 +35,12 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    }
+  },
+  data(){
+    return {
+      nomeRules: [(v) => (!!v || 'Campo obrigatório')],
+      sobrenomeRules: [(v) => (!!v || 'Campo obrigatório')],
     }
   },
   computed : {
