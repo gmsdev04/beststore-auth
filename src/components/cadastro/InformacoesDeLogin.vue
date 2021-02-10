@@ -52,6 +52,19 @@ export default {
       default: true,      
     }
   },
+  data(){
+    return {
+      
+        emailRules: [
+        (v) => (!!v || 'Campo obrigatório'),
+        (v) => (!v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser valido')],
+        senhaRules: [ 
+                    v => !!v || 'Campo obrigatório',
+                    v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}/.test(v) || 'Deve conter maiúscula, minúscula, números e 8 caracteres',
+                     ],
+        showPassword: false,
+    }
+  },
   computed : {
     ...mapState('Cadastro',['usuario']),
     email : {
@@ -70,15 +83,6 @@ export default {
         this.setSenha(valor);
       },
     }    
-  },
-  data(){
-    return {
-        emailRules: [
-        (v) => (!!v || 'Campo obrigatório'),
-        (v) => (!v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail deve ser valido')],
-        senhaRules: [(v) => (!!v || 'Campo obrigatório')],
-        showPassword: false,
-    }
   },
   methods: {
     ...mapMutations('Cadastro',['setEmail','setSenha'])

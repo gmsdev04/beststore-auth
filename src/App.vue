@@ -15,6 +15,7 @@ export default {
 
 <style>
 .app {
-  background: rgb(255,255,255);
+  background: rgb(235, 233, 233);
 }
 </style>
+/

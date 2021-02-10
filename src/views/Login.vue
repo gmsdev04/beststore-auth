@@ -11,7 +11,6 @@
         class="mx-auto"
         height="320"
         width="400"
-        shaped
       >
         <v-form
           ref="form"

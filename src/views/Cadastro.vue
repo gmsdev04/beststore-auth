@@ -10,7 +10,7 @@
       <v-card
         class="mx-auto"
         width="400"
-        shaped
+        rounded
       >
         <v-form
           ref="form"
@@ -82,7 +82,7 @@
                 color="green"
                 width="45%"
                 :disabled="!valid"
-                @click="proximo"
+                @click="cadastrar"
                 @keyup.enter="proximo"
               >
                 Cadastrar!
@@ -108,7 +108,13 @@
                 justify="center"
                 align="center"
               >
-                <router-link to="/login" tag="a" class="subtitle-2">Já possui conta ? Entre!</router-link>
+                <router-link
+                  to="/login"
+                  tag="a"
+                  class="subtitle-2 "
+                >
+                  Já possui conta ? Entre!
+                </router-link>
               </v-col>
             </v-row>
           </v-container>
@@ -119,9 +125,14 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex';
 import informacoesDeLogin from '../components/cadastro/InformacoesDeLogin.vue'
 import informacoesPessoais from '../components/cadastro/InformacoesPessoais.vue'
 import RevisarInformacoes from '../components/cadastro/RevisarInformacoes.vue'
+
+import * as cognito from '../cognito/CognitoAdapter'
+
 
 export default {
   components: {informacoesDeLogin,informacoesPessoais,RevisarInformacoes},
@@ -129,11 +140,27 @@ export default {
     return {
       valid: false,
       informacaoSolicitadaDaVez: 'informacoesPessoais',
-    };
+      };
+  },
+  computed : {
+    ...mapState('Cadastro',['usuario']), //MAPEANDO STATE VUEX
   },
   methods: {
     cadastrar() {
-      console.log('validated', this.valid);
+      cognito.registerUser(this.usuario)
+        .then(result => console.log(result))
+        .catch(error => {
+            switch(error['code']){
+              case 'UsernameExistsException': this.emailJaExiste();  break;
+              default: alert(error.message); break;
+            }
+          }
+        );
+    },
+    emailJaExiste(){
+      alert('E-mail ja cadastrado');
+      this.usuario.email = '';
+      this.informacaoSolicitadaDaVez = 'informacoesDeLogin';
     },
     proximo(){
       let proxima = '';
