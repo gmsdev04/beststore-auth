@@ -33,13 +33,24 @@
         @click:append="showPassword = !showPassword"
       />
     </v-row>
+
+    
+    <BotoesDeAcoes 
+    v-if="showButtons"
+    @direito="proximo"
+    @esquerdo="anterior"
+    :desativarDireito="!desativarBotaoDireito"/>
+
   </div>
 </template>
 
 <script>
+import BotoesDeAcoes from './BotoesDeAcoes.vue'
+
 import {mapState, mapMutations} from 'vuex'
 
 export default {
+  components : {BotoesDeAcoes},
   props:{
     readonly : {
       type: Boolean,
@@ -50,6 +61,16 @@ export default {
       type: Boolean,
       required: false,
       default: true,      
+    },
+    showButtons :{
+      type: Boolean,
+      required: false,
+      default: true,      
+    },
+    desativarBotaoDireito : {
+      type: Boolean,
+      required: false,
+      default: true,    
     }
   },
   data(){
@@ -85,7 +106,13 @@ export default {
     }    
   },
   methods: {
-    ...mapMutations('Cadastro',['setEmail','setSenha'])
+    ...mapMutations('Cadastro',['setEmail','setSenha','setInformacaoSolicitadaDaVez']),
+    proximo(){
+      this.setInformacaoSolicitadaDaVez('RevisarInformacoes');
+    },
+    anterior(){
+      this.setInformacaoSolicitadaDaVez('InformacoesPessoais');
+    }
   }
 }
 </script>

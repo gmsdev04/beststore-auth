@@ -32,13 +32,22 @@
         required
       />
     </v-row>
+
+    <BotoesDeAcoes v-if="showButtons"
+      :esquerdo="false"
+      :desativarDireito="!desativarBotaoDireito"
+      @direito="proximo"/>
+    
   </div>
 </template>
 
 <script>
+import BotoesDeAcoes from './BotoesDeAcoes.vue'
+
 import { mapMutations, mapState } from 'vuex';
 
 export default {
+  components: {BotoesDeAcoes},
   props:{
     readonly : {
       type: Boolean,
@@ -49,6 +58,16 @@ export default {
       type: Boolean,
       required: false,
       default: true,      
+    },
+     showButtons :{
+      type: Boolean,
+      required: false,
+      default: true,      
+    },
+    desativarBotaoDireito : {
+      type: Boolean,
+      required: false,
+      default: true,    
     }
   },
   data(){
@@ -77,7 +96,10 @@ export default {
     }
   },
   methods : {
-    ...mapMutations('Cadastro',['setNome','setSobrenome']), // MAPEANDO MUTATIONS VUEX
+    ...mapMutations('Cadastro',['setNome','setSobrenome','setInformacaoSolicitadaDaVez' ]), // MAPEANDO MUTATIONS VUEX
+    proximo(){
+      this.setInformacaoSolicitadaDaVez('InformacoesDeLogin');
+    }
   },
 }
 </script>

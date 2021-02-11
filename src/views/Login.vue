@@ -74,7 +74,7 @@
                 justify="center"
                 align="center"
               >
-                <div class="subtitle-2">
+                 <div class="subtitle-2">
                   Esqueceu a senha ?
                 </div>
               </v-col>

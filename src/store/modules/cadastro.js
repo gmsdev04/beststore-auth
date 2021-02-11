@@ -7,6 +7,9 @@ export default {
       dataNascimento: '',
       email: '',
       senha: '',
+    },
+    componente : {
+      informacaoSolicitadaDaVez : 'InformacoesPessoais' // primeira pagina
     }
   },
   mutations: {
@@ -22,6 +25,9 @@ export default {
     setSenha(state, payload){
       state.usuario.senha = payload;
     },
+    setInformacaoSolicitadaDaVez(state,payload){
+      state.componente.informacaoSolicitadaDaVez = payload;
+    }
   },
   actions: {
   },

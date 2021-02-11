@@ -40,69 +40,9 @@
               enter-active-class="animate__animated animate__fadeIn animate-speed"
               leave-active-class="animate__animated animate__fadeOut animate-speed"
             >
-              <component :is="informacaoSolicitadaDaVez" />
+              <component :desativarBotaoDireito="valid" :is="informacaoSolicitadaDaVez" />
             </transition>
-            <!-- BOTAO CADASTRAR -->
-           
-            <v-row
-              v-if="informacaoSolicitadaDaVez == 'informacoesPessoais' "
-              align="center"
-              justify="center"
-              class="btnEntrar"
-            >
-              <v-btn
-                plain
-                color="green"
-                :disabled="!valid"
-                @click="proximo"
-                @keyup.enter="proximo"
-              >
-                Próximo
-              </v-btn>
-            </v-row>
-
-            <v-row
-              v-else
-              align="center"
-              justify="center"
-              class="btnEntrar"
-            >
-              <v-btn
-                plain
-                color="green"
-                width="45%"
-                @click="anterior"
-              >
-                Anterior
-              </v-btn>
-
-              <v-btn
-                v-if="informacaoSolicitadaDaVez == 'RevisarInformacoes'"
-                plain
-                color="green"
-                width="45%"
-                :disabled="!valid"
-                @click="cadastrar"
-                @keyup.enter="proximo"
-              >
-                Cadastrar!
-              </v-btn>
-
-              <v-btn
-                v-else
-                plain
-                color="green"
-                width="45%"
-                :disabled="!valid"
-                @click="proximo"
-                @keyup.enter="proximo"
-              >
-                Próximo
-              </v-btn>
-            </v-row>
-            
-            <!-- ANTERIOR - PROXIMO -->
-           
+  
             <v-row>
               <v-col
                 justify="center"
@@ -117,6 +57,7 @@
                 </router-link>
               </v-col>
             </v-row>
+
           </v-container>
         </v-form>
       </v-card>
@@ -126,60 +67,27 @@
 
 <script>
 
-import { mapState } from 'vuex';
-import informacoesDeLogin from '../components/cadastro/InformacoesDeLogin.vue'
-import informacoesPessoais from '../components/cadastro/InformacoesPessoais.vue'
+import { mapState } from 'vuex'
+import InformacoesDeLogin from '../components/cadastro/InformacoesDeLogin.vue'
+import InformacoesPessoais from '../components/cadastro/InformacoesPessoais.vue'
 import RevisarInformacoes from '../components/cadastro/RevisarInformacoes.vue'
+import ConfirmacaoEmail from '../components/cadastro/ConfirmacaoEmail.vue'
 
-import * as cognito from '../cognito/CognitoAdapter'
 
 
 export default {
-  components: {informacoesDeLogin,informacoesPessoais,RevisarInformacoes},
+  components: {InformacoesDeLogin,InformacoesPessoais,RevisarInformacoes,ConfirmacaoEmail},
   data() {
     return {
       valid: false,
-      informacaoSolicitadaDaVez: 'informacoesPessoais',
       };
   },
   computed : {
-    ...mapState('Cadastro',['usuario']), //MAPEANDO STATE VUEX
-  },
-  methods: {
-    cadastrar() {
-      cognito.registerUser(this.usuario)
-        .then(result => console.log(result))
-        .catch(error => {
-            switch(error['code']){
-              case 'UsernameExistsException': this.emailJaExiste();  break;
-              default: alert(error.message); break;
-            }
-          }
-        );
-    },
-    emailJaExiste(){
-      alert('E-mail ja cadastrado');
-      this.usuario.email = '';
-      this.informacaoSolicitadaDaVez = 'informacoesDeLogin';
-    },
-    proximo(){
-      let proxima = '';
-      switch(this.informacaoSolicitadaDaVez){
-        case 'informacoesPessoais' : proxima = 'informacoesDeLogin'; break;
-        case 'informacoesDeLogin' : proxima = 'RevisarInformacoes'; break;
+    ...mapState('Cadastro',['componente']), //MAPEANDO STATE VUEX
+    informacaoSolicitadaDaVez(){
+      get : {
+        return this.componente.informacaoSolicitadaDaVez;
       }
-
-      this.informacaoSolicitadaDaVez = proxima;
-    },
-    anterior(){
-      let anterior = '';
-      switch(this.informacaoSolicitadaDaVez){
-        case 'informacoesDeLogin' : anterior = 'informacoesPessoais'; break;  
-        case 'RevisarInformacoes' : anterior = 'informacoesDeLogin'; break;
-      } 
-
-      this.informacaoSolicitadaDaVez = anterior;
-
     }
   },
 };

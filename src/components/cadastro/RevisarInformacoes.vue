@@ -12,20 +12,67 @@
     <InformacoesPessoais
       readonly
       :show-description="false"
+      :show-buttons="false"
     />
     <InformacoesDeLogin
       readonly
       :show-description="false"
+      :show-buttons="false"
     />
+
+  <BotoesDeAcoes 
+      :desativarDireito="!desativarBotaoDireito"
+      botaoDireitoTexto="Cadastrar!"
+      @esquerdo="anterior"
+      @direito="cadastrar"/>
+
   </div>
 </template>
 
 <script>
-import InformacoesPessoais from './InformacoesPessoais'
-import InformacoesDeLogin from './InformacoesDeLogin'
+import { mapState, mapMutations } from 'vuex'
+import BotoesDeAcoes from './BotoesDeAcoes.vue'
+import InformacoesDeLogin from './InformacoesDeLogin.vue'
+import InformacoesPessoais from './InformacoesPessoais.vue'
+
+import cognito from '../../cognito/CognitoAdapter'
 
 export default {
-  components: {InformacoesPessoais, InformacoesDeLogin}
+  components: {InformacoesPessoais, InformacoesDeLogin, BotoesDeAcoes},
+   
+  props: {
+    desativarBotaoDireito : {
+      type: Boolean,
+      required: false,
+      default: true,    
+    }
+  },
+  computed : {
+    ...mapState('Cadastro',['usuario','componente']), //MAPEANDO STATE VUEX
+  },
+  methods: {
+    ...mapMutations('Cadastro',['setInformacaoSolicitadaDaVez']),
+    anterior(){
+       this.setInformacaoSolicitadaDaVez('InformacoesDeLogin')
+    },
+    cadastrar() {
+      console.log('cadastro');
+      cognito.registerUser(this.usuario)
+        .then(result => this.setInformacaoSolicitadaDaVez('ConfirmacaoEmail'))
+        .catch(error => {
+            switch(error['code']){
+              case 'UsernameExistsException': this.emailJaExiste(); break;
+              default: alert(error.message); break;
+            }
+          }
+        )
+      },
+    emailJaExiste(){
+      alert('E-mail ja cadastrado');
+      this.usuario.email = '';
+      this.setInformacaoSolicitadaDaVez('informacoesDeLogin')
+    }
+  }
 }
 </script>
 
