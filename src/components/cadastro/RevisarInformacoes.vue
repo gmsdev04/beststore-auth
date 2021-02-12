@@ -20,12 +20,12 @@
       :show-buttons="false"
     />
 
-  <BotoesDeAcoes 
-      :desativarDireito="!desativarBotaoDireito"
-      botaoDireitoTexto="Cadastrar!"
+    <BotoesDeAcoes 
+      :desativar-direito="!desativarBotaoDireito"
+      botao-direito-texto="Cadastrar!"
       @esquerdo="anterior"
-      @direito="cadastrar"/>
-
+      @direito="cadastrar"
+    />
   </div>
 </template>
 

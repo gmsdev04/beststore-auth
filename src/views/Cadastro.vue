@@ -40,7 +40,10 @@
               enter-active-class="animate__animated animate__fadeIn animate-speed"
               leave-active-class="animate__animated animate__fadeOut animate-speed"
             >
-              <component :desativarBotaoDireito="valid" :is="informacaoSolicitadaDaVez" />
+              <component
+                :is="informacaoSolicitadaDaVez"
+                :desativar-botao-direito="valid"
+              />
             </transition>
   
             <v-row>
@@ -57,7 +60,6 @@
                 </router-link>
               </v-col>
             </v-row>
-
           </v-container>
         </v-form>
       </v-card>

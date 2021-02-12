@@ -36,11 +36,11 @@
 
     
     <BotoesDeAcoes 
-    v-if="showButtons"
-    @direito="proximo"
-    @esquerdo="anterior"
-    :desativarDireito="!desativarBotaoDireito"/>
-
+      v-if="showButtons"
+      :desativar-direito="!desativarBotaoDireito"
+      @direito="proximo"
+      @esquerdo="anterior"
+    />
   </div>
 </template>
 

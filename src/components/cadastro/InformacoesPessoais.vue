@@ -33,11 +33,12 @@
       />
     </v-row>
 
-    <BotoesDeAcoes v-if="showButtons"
+    <BotoesDeAcoes
+      v-if="showButtons"
       :esquerdo="false"
-      :desativarDireito="!desativarBotaoDireito"
-      @direito="proximo"/>
-    
+      :desativar-direito="!desativarBotaoDireito"
+      @direito="proximo"
+    />
   </div>
 </template>
 

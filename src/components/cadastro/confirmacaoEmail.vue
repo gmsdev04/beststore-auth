@@ -85,8 +85,16 @@ export default {
   methods : {
     confirmar(){
       cognito.confirmEmail(this.usuario,this.codigoConfirmacao)
-      .then(result => console.log(result))
-      .catch(error => console.log(error));
+      .then(() => this.$router.push({name:'login'}))
+      .catch(error => {
+        switch(error['code']){
+          case 'CodeMismatchException' : this.codigoInvalido(); break;
+          default: alert(error.message); break;
+        }
+      });
+    },
+    codigoInvalido(){
+      this.codigoConfirmacao = ''
     }
   }
 }

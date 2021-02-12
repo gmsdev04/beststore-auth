@@ -1,42 +1,43 @@
 <template>
   <div class="botoesDeAcoes">
-      
-      <v-row
-        align="center"
-        justify="center"
-        class="btnEntrar"
+    <v-row
+      align="center"
+      justify="center"
+      class="btnEntrar"
+    >
+      <v-col 
+        v-if="esquerdo" 
+        class="d-flex justify-center"
+        cols="12"  
+        :md="MdCols"
       >
-        <v-col 
-          class="d-flex justify-center" 
-          cols="12" :md="MdCols"  
-          v-if="esquerdo">
-          <v-btn
-            :disabled="desativarEsquerdo"
-            plain
-            color="green"
-            @click="$emit('esquerdo')"
-          >
-            {{ botaoEsquerdoTexto }}
-          </v-btn>
-        </v-col>
+        <v-btn
+          :disabled="desativarEsquerdo"
+          plain
+          color="green"
+          @click="$emit('esquerdo')"
+        >
+          {{ botaoEsquerdoTexto }}
+        </v-btn>
+      </v-col>
         
-        <v-col 
-          class="d-flex justify-center" 
-          cols="12" 
-          :md="MdCols" 
-          v-if="direito">
-          <v-btn
-            :disabled="desativarDireito"
-            plain
-            color="green"
-            @click="$emit('direito')"
-            @keyup.enter="proximo"
-          >
-            {{ botaoDireitoTexto }}
-          </v-btn>
-        </v-col>
-      </v-row>
-      
+      <v-col 
+        v-if="direito" 
+        class="d-flex justify-center" 
+        cols="12" 
+        :md="MdCols"
+      >
+        <v-btn
+          :disabled="desativarDireito"
+          plain
+          color="green"
+          @click="$emit('direito')"
+          @keyup.enter="proximo"
+        >
+          {{ botaoDireitoTexto }}
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
