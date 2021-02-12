@@ -21,7 +21,7 @@
               align="center"
               justify="center"
             >
-              <div class="text-h5">
+              <div class="text-h5 green--text">
                 Fazer Login
               </div>
             </v-row>
@@ -35,7 +35,7 @@
             </v-row>
             <v-row>
               <v-text-field
-                v-model="email"
+                v-model="login.email"
                 class="formField"
                 :rules="emailRules"
                 label="E-mail"
@@ -45,7 +45,7 @@
             </v-row>
             <v-row>
               <v-text-field
-                v-model="senha"
+                v-model="login.senha"
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="showPassword ? 'text' : 'password'"
                 class="formField"
@@ -87,11 +87,16 @@
 </template>
 
 <script>
+import cognito from '../cognito/CognitoAdapter'
+
 export default {
   data() {
     return {
-      senha: '',
-      email: '',
+      login : {
+        senha: '',
+        email: ''
+      },
+      redirectUri : this.$route.query.redirect_uri,
       valid: false,
       emailRules: [
         (v) => (!!v || 'Campo obrigatório'),
@@ -103,7 +108,17 @@ export default {
   methods: {
     logar() {
       this.$refs.form.validate();
-      console.log('validated', this.valid);
+      cognito.authenticate(this.login)
+      .then(result => {
+        window.location = this.redirectUri;
+      })
+      .catch(error => {
+        switch(error.code){
+          case 'NotAuthorizedException': alert("Usuário ou senha inválido"); break;
+          case 'UserNotConfirmedException': console.log('redirect to confirm page'); break;
+          default: alert(error.message); console.error(error); break;
+        }
+      });
     },
   },
 };

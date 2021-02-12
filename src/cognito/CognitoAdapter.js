@@ -1,5 +1,6 @@
 var AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 
+
 const funcs = {
   registerUser(usuario) {
     
@@ -68,6 +69,53 @@ const funcs = {
           return;
         }
         resolve(result);
+      });
+    });
+  },
+  authenticate(login){
+    return new Promise((resolve, reject) => {
+      var authenticationData = {
+        Username: login.email,
+        Password: login.senha,
+      };
+      var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
+        authenticationData
+      );
+      var poolData = {
+        UserPoolId: process.env.VUE_APP_AWS_COGNITO_USER_POOL_ID,
+        ClientId: process.env.VUE_APP_AWS_COGNITO_USER_POOL_CLIENT_ID,
+      };
+
+      var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+      var userData = {
+        Username: login.email,
+        Pool: userPool,
+      };
+      var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function(result) {
+          var accessToken = result.getAccessToken().getJwtToken();
+          
+          resolve(result);
+
+          //POTENTIAL: Region needs to be set if not already set previously elsewhere.
+          AWS.config.region = process.env.VUE_APP_AWS_COGNITO_REGION;
+      
+          AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: '...', // your identity pool id here
+            Logins: {
+              // Change the key below according to the specific region your user pool is in.
+              'cognito-idp.sa-east-1.amazonaws.com/sa-east-1_gRAY1m4fj': result
+                .getIdToken()
+                .getJwtToken(),
+            },
+          });
+      
+        },
+      
+        onFailure: function(err) {
+          reject(err);
+        },
       });
     });
   }

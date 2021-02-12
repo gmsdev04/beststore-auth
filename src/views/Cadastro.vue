@@ -70,10 +70,10 @@
 <script>
 
 import { mapState } from 'vuex'
-import InformacoesDeLogin from '../components/cadastro/InformacoesDeLogin.vue'
-import InformacoesPessoais from '../components/cadastro/InformacoesPessoais.vue'
-import RevisarInformacoes from '../components/cadastro/RevisarInformacoes.vue'
-import ConfirmacaoEmail from '../components/cadastro/ConfirmacaoEmail.vue'
+import InformacoesDeLogin from '../components/cadastro/InformacoesDeLogin'
+import InformacoesPessoais from '../components/cadastro/InformacoesPessoais'
+import RevisarInformacoes from '../components/cadastro/RevisarInformacoes'
+import ConfirmacaoEmail from '../components/cadastro/ConfirmacaoEmail'
 
 
 
