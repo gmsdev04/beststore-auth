@@ -58,8 +58,11 @@ export default {
     cadastrar() {
       console.log('cadastro');
       cognito.registerUser(this.usuario)
-        .then(result => this.setInformacaoSolicitadaDaVez('ConfirmacaoEmail'))
-        .catch(error => {
+        .then(result => {
+          console.log('result pós cadastro ->',result);
+          this.setInformacaoSolicitadaDaVez('ConfirmacaoEmail')
+        } 
+        ).catch(error => {
             switch(error['code']){
               case 'UsernameExistsException': this.emailJaExiste(); break;
               default: alert(error.message); break;
